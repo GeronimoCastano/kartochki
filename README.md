@@ -1,0 +1,36 @@
+# Карточки
+
+Flashcards for lesson 14 («В кафе») of *Русский язык как иностранный, часть 1* (MPGU, 2018). You get 173 cards in nine decks: nationalities, этот / тот, the future tense with быть, the spring reading, the café dialogue, the Russian menu, cooking and shopping, groceries and clothes.
+
+Open it here: **https://geronimocastano.github.io/kartochki/**
+
+## What a card shows
+
+- The Russian word with the Latin letters stacked under each Cyrillic letter (п → p, а → a). A yellow band marks the stressed vowel, and the Latin line carries an acute accent on it.
+- The English meaning.
+- A grammar note: part of speech, gender, plural, conjugation, or the case a word takes.
+- An example sentence from the book where it has one.
+
+## How to study
+
+Pick a deck. Tap the card to flip it, then press **Got it** or **Again**. "Again" sends the card back a few places in the queue. Swipe left for the next card and right for the previous one.
+
+Settings live on the home screen and on the chips above each card:
+
+- **Ask in** Russian, English, or a mix of both.
+- **Shuffle** on or off.
+- **Latin** under the Russian on the question side, for when you still read Cyrillic slowly.
+
+## Put it on your iPhone
+
+Open the link in Safari, tap Share, then **Add to Home Screen**. It opens full screen and works offline after the first visit.
+
+## Run it locally
+
+No build step. Serve the folder:
+
+```bash
+python3 -m http.server 4517
+```
+
+The vocabulary lives in `data.js`. A backtick after a vowel marks stress (`кита`ец`), and `ё` counts as stressed on its own.

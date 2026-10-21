@@ -1,0 +1,15 @@
+{
+  "name": "Карточки · Урок 14",
+  "short_name": "Карточки",
+  "description": "Russian flashcards for lesson 14, «В кафе».",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f2d9d3",
+  "theme_color": "#f2d9d3",
+  "icons": [
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Карточки · Урок 14</title>
+  <meta name="description" content="Flashcards for lesson 14, «В кафе», with transliteration and grammar notes.">
+  <meta name="theme-color" content="#f2d9d3" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#2a1a17" media="(prefers-color-scheme: dark)">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Карточки">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="preload" href="fonts/unbounded-cyr.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/golos-lat.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+  <!-- Home: the page is the index of decks -->
+  <main id="home" class="home" hidden>
+    <header class="mast">
+      <span class="mast__mark" lang="ru">Карточки</span>
+      <span class="mast__meta">Lesson 14</span>
+    </header>
+
+    <h1 class="home__title" lang="ru"><span class="home__num">Урок 14.</span> В кафе</h1>
+    <p class="home__lede">Vocabulary from the café lesson, with the Latin spelling under every letter and a grammar note on each card. <span id="total-count"></span></p>
+
+    <section class="prefs" aria-label="Study settings">
+      <fieldset class="seg">
+        <legend class="prefs__label">Ask in</legend>
+        <div class="seg__track">
+          <label><input type="radio" name="dir" value="ru"><span>Russian</span></label>
+          <label><input type="radio" name="dir" value="en"><span>English</span></label>
+          <label><input type="radio" name="dir" value="mix"><span>Mixed</span></label>
+        </div>
+      </fieldset>
+      <div class="prefs__switches">
+        <label class="switch">
+          <input type="checkbox" name="shuffle" role="switch">
+          <span class="switch__track" aria-hidden="true"></span>
+          <span>Shuffle</span>
+        </label>
+        <label class="switch">
+          <input type="checkbox" name="latin" role="switch">
+          <span class="switch__track" aria-hidden="true"></span>
+          <span>Latin on the question side</span>
+        </label>
+      </div>
+    </section>
+
+    <nav aria-label="Decks">
+      <ol class="index" id="deck-list"></ol>
+    </nav>
+
+    <footer class="colophon">
+      <p>Words from <span lang="ru">«Русский язык как иностранный», часть 1</span> (MPGU, 2018), pages 113 to 121. The Latin line is letter for letter; an unstressed <span lang="ru">о</span> sounds close to <span lang="ru">а</span>. The yellow band marks the stressed vowel.</p>
+    </footer>
+  </main>
+
+  <!-- Study -->
+  <main id="study" class="study" hidden>
+    <header class="study__bar">
+      <a href="#/" class="back">Decks</a>
+      <span class="study__title" id="study-title" lang="ru"></span>
+      <span class="study__count" id="study-count" aria-live="polite"></span>
+    </header>
+    <div class="progress" aria-hidden="true"><span id="progress-fill"></span></div>
+
+    <div class="chips" role="group" aria-label="Study settings">
+      <button type="button" class="chip" id="chip-dir"></button>
+      <button type="button" class="chip" id="chip-shuffle" aria-pressed="false">Shuffle</button>
+      <button type="button" class="chip" id="chip-latin" aria-pressed="false">Latin</button>
+    </div>
+
+    <section class="stage" id="stage">
+      <div class="card" id="card" role="button" tabindex="0" aria-label="Flip card">
+        <div class="card__inner" id="card-inner">
+          <div class="face face--front" id="face-front"></div>
+          <div class="face face--back" id="face-back" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <div class="done" id="done" hidden>
+        <h2 class="done__title">Deck done.</h2>
+        <p class="done__line" id="done-line"></p>
+        <div class="done__actions">
+          <button type="button" class="btn btn--primary" id="btn-misses">Practise the misses</button>
+          <button type="button" class="btn" id="btn-restart">Start over</button>
+          <a href="#/" class="btn btn--quiet">All decks</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="actions" id="actions">
+      <button type="button" class="btn btn--wide" id="btn-show">Show answer</button>
+      <button type="button" class="btn" id="btn-again" hidden>Again</button>
+      <button type="button" class="btn btn--primary" id="btn-got" hidden>Got it</button>
+    </footer>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
