@@ -1,7 +1,7 @@
 {
-  "name": "Карточки · Урок 14",
+  "name": "Карточки · Russian flashcards",
   "short_name": "Карточки",
-  "description": "Russian flashcards for lesson 14, «В кафе».",
+  "description": "Russian flashcards with transliteration, stress marks and grammar notes.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

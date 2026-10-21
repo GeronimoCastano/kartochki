@@ -1,4 +1,5 @@
-// Vocabulary from Урок 14 «В кафе», Русский язык как иностранный, часть 1 (МПГУ, 2018), pp. 113–121.
+// Russian vocabulary, general use. Most decks come from Урок 14 «В кафе», Русский язык как
+// иностранный, часть 1 (МПГУ, 2018), pp. 113–121; the nationalities go beyond the book.
 // A backtick follows the stressed vowel: кита`ец. ё is always stressed and needs no mark.
 // Fields: ru, en, g (grammar), x (example, Russian), xe (example, English).
 
@@ -8,6 +9,8 @@ window.DECKS = [
     ru: "Кто отку`да",
     en: "Countries and people",
     cards: [
+      { ru: "Отку`да вы?", en: "Where are you from?", g: "отку`да = from where · informal: Отку`да ты?", x: "Отку`да вы? — Я из Колу`мбии.", xe: "Where are you from? I'm from Colombia." },
+      { ru: "Я из…", en: "I'm from…", g: "из + genitive: Росси`я → из Росси`и, Герма`ния → из Герма`нии" },
       { ru: "Кита`й", en: "China", g: "noun · m · из Кита`я (from China)", x: "Лин Цзя из Кита`я.", xe: "Lin Jia is from China." },
       { ru: "кита`ец", en: "Chinese man", g: "noun · m · pl. кита`йцы (е drops out)" },
       { ru: "кита`янка", en: "Chinese woman", g: "noun · f" },
@@ -23,7 +26,58 @@ window.DECKS = [
       { ru: "Росси`я", en: "Russia", g: "noun · f · из Росси`и" },
       { ru: "ру`сский", en: "Russian man", g: "adjective used as a noun · m", x: "Ива`н — ру`сский.", xe: "Ivan is Russian." },
       { ru: "ру`сская", en: "Russian woman", g: "adjective used as a noun · f" },
-      { ru: "ру`сские", en: "Russians", g: "adjective used as a noun · plural" }
+      { ru: "ру`сские", en: "Russians", g: "adjective used as a noun · plural" },
+
+      { ru: "Колу`мбия", en: "Colombia", g: "noun · f · из Колу`мбии", x: "Я из Колу`мбии.", xe: "I'm from Colombia." },
+      { ru: "колумби`ец", en: "Colombian man", g: "noun · m · pl. колумби`йцы (е → й)" },
+      { ru: "колумби`йка", en: "Colombian woman", g: "noun · f" },
+      { ru: "колумби`йцы", en: "Colombians", g: "noun · plural" },
+
+      { ru: "Герма`ния", en: "Germany", g: "noun · f · из Герма`нии" },
+      { ru: "не`мец", en: "German man", g: "noun · m · pl. не`мцы · not built from Герма`ния: from an old word for «mute»" },
+      { ru: "не`мка", en: "German woman", g: "noun · f" },
+      { ru: "не`мцы", en: "Germans", g: "noun · plural", x: "Мои` друзья` — не`мцы.", xe: "My friends are German." },
+
+      { ru: "Аме`рика", en: "America", g: "noun · f · из Аме`рики" },
+      { ru: "США", en: "the USA", g: "abbreviation · plural · indeclinable · read [сэ-шэ-а`] · из США", x: "Он из США.", xe: "He's from the USA." },
+      { ru: "америка`нец", en: "American man", g: "noun · m · pl. америка`нцы" },
+      { ru: "америка`нка", en: "American woman", g: "noun · f" },
+      { ru: "америка`нцы", en: "Americans", g: "noun · plural" },
+
+      { ru: "Испа`ния", en: "Spain", g: "noun · f · из Испа`нии" },
+      { ru: "испа`нец", en: "Spanish man", g: "noun · m · pl. испа`нцы" },
+      { ru: "испа`нка", en: "Spanish woman", g: "noun · f" },
+      { ru: "испа`нцы", en: "Spaniards", g: "noun · plural" },
+
+      { ru: "Ме`ксика", en: "Mexico", g: "noun · f · из Ме`ксики" },
+      { ru: "мексика`нец", en: "Mexican man", g: "noun · m · pl. мексика`нцы" },
+      { ru: "мексика`нка", en: "Mexican woman", g: "noun · f" },
+      { ru: "мексика`нцы", en: "Mexicans", g: "noun · plural" },
+
+      { ru: "Аргенти`на", en: "Argentina", g: "noun · f · из Аргенти`ны" },
+      { ru: "аргенти`нец", en: "Argentine man", g: "noun · m · pl. аргенти`нцы" },
+      { ru: "аргенти`нка", en: "Argentine woman", g: "noun · f" },
+      { ru: "аргенти`нцы", en: "Argentines", g: "noun · plural" },
+
+      { ru: "Брази`лия", en: "Brazil", g: "noun · f · из Брази`лии" },
+      { ru: "бразиле`ц", en: "Brazilian man", g: "noun · m · pl. бразильцы` (stress moves to the end)" },
+      { ru: "бразилья`нка", en: "Brazilian woman", g: "noun · f" },
+      { ru: "бразильцы`", en: "Brazilians", g: "noun · plural" },
+
+      { ru: "Фра`нция", en: "France", g: "noun · f · из Фра`нции" },
+      { ru: "францу`з", en: "Frenchman", g: "noun · m · pl. францу`зы" },
+      { ru: "францу`женка", en: "Frenchwoman", g: "noun · f · з → ж" },
+      { ru: "францу`зы", en: "the French (people)", g: "noun · plural" },
+
+      { ru: "Ита`лия", en: "Italy", g: "noun · f · из Ита`лии" },
+      { ru: "италья`нец", en: "Italian man", g: "noun · m · pl. италья`нцы" },
+      { ru: "италья`нка", en: "Italian woman", g: "noun · f" },
+      { ru: "италья`нцы", en: "Italians", g: "noun · plural" },
+
+      { ru: "Япо`ния", en: "Japan", g: "noun · f · из Япо`нии" },
+      { ru: "япо`нец", en: "Japanese man", g: "noun · m · pl. япо`нцы" },
+      { ru: "япо`нка", en: "Japanese woman", g: "noun · f" },
+      { ru: "япо`нцы", en: "the Japanese (people)", g: "noun · plural" }
     ]
   },
   {

@@ -83,7 +83,7 @@ button, input { font: inherit; color: inherit; }
   overflow-wrap: anywhere;
   min-width: 0;
 }
-.home__num {
+.home__accent {
   display: block;
   color: var(--color-accent-ink);
 }

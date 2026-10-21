@@ -1,5 +1,5 @@
 // Offline cache: serve from cache first, refresh in the background.
-const CACHE = "kartochki-v3";
+const CACHE = "kartochki-v4";
 const ASSETS = [
   "./", "index.html", "tokens.css", "app.css", "app.js", "data.js", "manifest.webmanifest",
   "icons/icon.svg", "icons/apple-touch-icon.png", "icons/icon-512.png",

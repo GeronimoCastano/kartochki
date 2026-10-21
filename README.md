@@ -1,6 +1,8 @@
 # Карточки
 
-Flashcards for lesson 14 («В кафе») of *Русский язык как иностранный, часть 1* (MPGU, 2018). You get 173 cards in nine decks: nationalities, этот / тот, the future tense with быть, the spring reading, the café dialogue, the Russian menu, cooking and shopping, groceries and clothes.
+Russian flashcards for everyday use. You get 216 cards in nine decks: countries and nationalities, этот / тот, the future tense with быть, the spring reading, the café dialogue, the Russian menu, cooking and shopping, groceries and clothes.
+
+Most words come from lesson 14 («В кафе») of *Русский язык как иностранный, часть 1* (MPGU, 2018). The nationalities deck adds Colombia, Germany, the USA, Spain, Mexico, Argentina, Brazil, France, Italy and Japan to the ones in the book. To add a deck, append it to `data.js`.
 
 Open it here: **https://geronimocastano.github.io/kartochki/**
 
