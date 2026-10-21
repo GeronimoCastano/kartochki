@@ -6,7 +6,7 @@ Open it here: **https://geronimocastano.github.io/kartochki/**
 
 ## What a card shows
 
-- The Russian word with the Latin letters stacked under each Cyrillic letter (п → p, а → a). A yellow band marks the stressed vowel, and the Latin line carries an acute accent on it.
+- The Russian word with the Latin letters stacked under each Cyrillic letter (п → p, а → a). An acute accent marks the stressed vowel, as the book prints it, and the Latin line carries the same accent.
 - The English meaning.
 - A grammar note: part of speech, gender, plural, conjugation, or the case a word takes.
 - An example sentence from the book where it has one.

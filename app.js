@@ -53,9 +53,12 @@
     return chars.map((c, i) => latinFor(chars, i) ?? c.ch).join("");
   };
 
-  // Inline Russian with the stressed vowel banded
+  // Stress is printed as in the book: an acute over the vowel, none over ё
+  const ACCENT = "\u0301";
+  const accented = (c) => esc(c.ch) + (c.stress && !/[ёЁ]/.test(c.ch) ? ACCENT : "");
+
   function ruInline(str) {
-    return parse(str).map((c) => (c.stress ? `<span class="st">${esc(c.ch)}</span>` : esc(c.ch))).join("");
+    return parse(str).map(accented).join("");
   }
   // Any text: Russian runs carry stress, everything else passes through
   const rich = (str) => ruInline(str);
@@ -80,7 +83,7 @@
         const la = c.la ?? "";
         wu += Math.max(0.92, la.length * 0.25 + 0.06);
         return `<span class="il__c${c.stress ? " is-stress" : ""}" style="--k:${k++}">` +
-          `<span class="il__cy">${esc(c.ch)}</span><span class="il__la">${esc(la || " ")}</span></span>`;
+          `<span class="il__cy">${accented(c)}</span><span class="il__la">${esc(la || " ")}</span></span>`;
       }).join("");
       units = Math.max(units, wu);
       return `<span class="il__w">${cols}</span>`;

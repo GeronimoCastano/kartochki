@@ -65,7 +65,6 @@
   --color-accent:     oklch(66% 0.150 220);   /* riso cyan, fills */
   --color-accent-ink: oklch(44% 0.130 225);   /* cyan for text on paper */
   --color-on-accent:  oklch(18% 0.060 30);
-  --color-stress:     oklch(84% 0.160 95);    /* the stressed-vowel band */
   --color-focus:      oklch(44% 0.130 225);
 
   --font-display: "Unbounded", ui-sans-serif, system-ui, sans-serif;
@@ -127,7 +126,6 @@
     --color-accent:     oklch(72% 0.130 220);
     --color-accent-ink: oklch(78% 0.120 220);
     --color-on-accent:  oklch(18% 0.060 30);
-    --color-stress:     oklch(50% 0.110 85);
     --color-focus:      oklch(78% 0.120 220);
   }
 }
