@@ -2,7 +2,12 @@
   "use strict";
 
   const DECKS = window.DECKS;
-  const ALL = { id: "all", ru: "Все карто`чки", en: "Every card, mixed together", cards: DECKS.flatMap((d) => d.cards) };
+  // Some words sit in more than one deck; the combined deck shows each once
+  const seenRu = new Set();
+  const ALL = {
+    id: "all", ru: "Все карто`чки", en: "Every card, mixed together",
+    cards: DECKS.flatMap((d) => d.cards).filter((c) => !seenRu.has(c.ru) && seenRu.add(c.ru))
+  };
   const byId = (id) => (id === "all" ? ALL : DECKS.find((d) => d.id === id));
   const $ = (id) => document.getElementById(id);
 

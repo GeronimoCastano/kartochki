@@ -1,8 +1,8 @@
 # Карточки
 
-Russian flashcards for everyday use. You get 216 cards in nine decks: countries and nationalities, этот / тот, the future tense with быть, the spring reading, the café dialogue, the Russian menu, cooking and shopping, groceries and clothes.
+Russian flashcards for everyday use. You get 304 cards in ten decks: countries and nationalities, colours, basic adjectives, food and drink, этот / тот, the future tense with быть, the café dialogue, cooking and shopping, clothes, and the spring reading.
 
-Most words come from lesson 14 («В кафе») of *Русский язык как иностранный, часть 1* (MPGU, 2018). The nationalities deck adds Colombia, Germany, the USA, Spain, Mexico, Argentina, Brazil, France, Italy and Japan to the ones in the book. To add a deck, append it to `data.js`.
+Most of the grammar decks come from lesson 14 («В кафе») of *Русский язык как иностранный, часть 1* (MPGU, 2018). The nationalities, colours, adjectives and most of the food deck go beyond the book. To add a deck, append it to `data.js`.
 
 Open it here: **https://geronimocastano.github.io/kartochki/**
 
