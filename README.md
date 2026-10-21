@@ -10,6 +10,7 @@ Open it here: **https://geronimocastano.github.io/kartochki/**
 - The English meaning.
 - A grammar note: part of speech, gender, plural, conjugation, or the case a word takes.
 - An example sentence from the book where it has one.
+- A speaker button that reads the word or the example aloud with your phone's Russian voice. Tap it a second time for a slower take. For a clearer voice on iPhone, download an enhanced Russian voice under Settings → Accessibility → Spoken Content → Voices → Russian.
 
 ## How to study
 

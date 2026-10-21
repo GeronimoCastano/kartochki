@@ -103,6 +103,45 @@
   document.fonts?.ready.then(fit);
   window.addEventListener("resize", fit);
 
+  // ── Voice: the device's own Russian text-to-speech ───────────────
+  const synth = window.speechSynthesis;
+  let ruVoice = null;
+  function pickVoice() {
+    const ru = synth.getVoices().filter((v) => (v.lang || "").toLowerCase().startsWith("ru"));
+    ruVoice = ru.find((v) => /milena|katya|yuri|google/i.test(v.name)) || ru[0] || null;
+  }
+  if (synth) {
+    pickVoice();
+    synth.addEventListener?.("voiceschanged", pickVoice);
+  }
+
+  // A second tap on the same text within a few seconds replays it slower
+  let lastSaid = { text: "", at: 0 };
+  function speak(text, btn) {
+    const now = Date.now();
+    const slow = lastSaid.text === text && now - lastSaid.at < 4000;
+    lastSaid = { text, at: now };
+    synth.cancel();
+    const u = new SpeechSynthesisUtterance(text.replace(/\s*\/\s*/g, ", "));
+    u.lang = "ru-RU";
+    if (ruVoice) u.voice = ruVoice;
+    u.rate = slow ? 0.6 : 0.9;
+    document.querySelectorAll(".say.is-speaking").forEach((b) => b.classList.remove("is-speaking"));
+    btn.classList.add("is-speaking");
+    u.onend = u.onerror = () => btn.classList.remove("is-speaking");
+    synth.speak(u);
+  }
+
+  const SPEAKER = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">' +
+    '<path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>';
+  const sayBtn = (text, label, cls = "") =>
+    synth ? `<button type="button" class="say ${cls}" data-say="${esc(plain(text))}" aria-label="${label}">${SPEAKER}</button>` : "";
+
+  $("stage").addEventListener("click", (e) => {
+    const b = e.target.closest(".say");
+    if (b) { e.stopPropagation(); speak(b.dataset.say, b); }
+  });
+
   // ── Home ─────────────────────────────────────────────────────────
   function renderHome() {
     const list = $("deck-list");
@@ -172,14 +211,16 @@
     card.classList.remove("is-flipped", "enter", "enter-back");
     S.flipped = false;
 
+    synth?.cancel();
     const front = dir === "ru"
-      ? `<span class="face__label">Russian</span><div class="face__body">${interlinear(c.ru, settings.latin ? "" : "no-latin")}</div>`
-      : `<span class="face__label">English</span><div class="face__body"><p class="prompt-en${c.en.length > 22 ? " is-long" : ""}">${esc(c.en)}</p></div>`;
+      ? `<div class="face__top"><span class="face__label">Russian</span>${sayBtn(c.ru, "Listen")}</div><div class="face__body">${interlinear(c.ru, settings.latin ? "" : "no-latin")}</div>`
+      : `<div class="face__top"><span class="face__label">English</span></div><div class="face__body"><p class="prompt-en${c.en.length > 22 ? " is-long" : ""}">${esc(c.en)}</p></div>`;
 
     const ex = c.x
-      ? `<p class="ex" lang="ru">${rich(c.x)}<span class="ex__en" lang="en">${esc(c.xe || "")}</span></p>`
+      ? `<p class="ex" lang="ru">${rich(c.x)}${sayBtn(c.x, "Listen to the example", "say--sm")}<span class="ex__en" lang="en">${esc(c.xe || "")}</span></p>`
       : "";
     const back =
+      `<div class="face__top">${sayBtn(c.ru, "Listen")}</div>` +
       `<div class="face__body">${interlinear(c.ru, "il--back")}` +
       `<p class="answer-en">${esc(c.en)}</p>` +
       `<p class="gram">${rich(c.g || "")}</p>${ex}</div>`;
@@ -274,7 +315,7 @@
   const card = $("card");
   let drag = null;
   card.addEventListener("pointerdown", (e) => {
-    if (e.button !== 0) return;
+    if (e.button !== 0 || e.target.closest(".say")) return;
     drag = { x: e.clientX, y: e.clientY, dx: 0, moved: false, id: e.pointerId };
   });
   card.addEventListener("pointermove", (e) => {
@@ -304,6 +345,7 @@
   card.addEventListener("pointerup", endDrag);
   card.addEventListener("pointercancel", (e) => { if (drag && e.pointerId === drag.id) { drag = null; card.classList.remove("is-dragging"); $("card-inner").style.transform = ""; } });
   card.addEventListener("keydown", (e) => {
+    if (e.target !== card) return;
     if (e.key === "Enter" || e.key === " ") { e.preventDefault(); flip(); }
   });
   document.addEventListener("keydown", (e) => {

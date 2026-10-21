@@ -366,6 +366,52 @@ button, input { font: inherit; color: inherit; }
   container-type: inline-size;
 }
 .face--back { transform: rotateY(180deg); }
+/* Only the face you can see takes taps (Safari hit-tests hidden backfaces) */
+.card:not(.is-flipped) .face--back,
+.card.is-flipped .face--front { pointer-events: none; }
+
+.face__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  min-height: 44px;
+}
+.face__top .say { margin-left: auto; }
+
+/* Listen button */
+.say {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: var(--rule-hair) solid var(--color-ink);
+  border-radius: var(--radius-pill);
+  background: var(--color-card);
+  color: var(--color-ink);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+}
+.say svg { width: 20px; height: 20px; }
+.say:active { transform: translateY(1px); }
+.say.is-speaking { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-on-accent); }
+@media (hover: hover) and (pointer: fine) {
+  .say:not(.is-speaking):hover { background: var(--color-paper-2); }
+}
+.say--sm {
+  width: 32px;
+  height: 32px;
+  margin-left: var(--space-xs);
+  vertical-align: -0.45em;
+  border-color: var(--color-rule-2);
+}
+.say--sm::before { content: ""; position: absolute; inset: -6px; }  /* 44px hit area */
+.say--sm svg { width: 16px; height: 16px; }
 
 .face__label {
   font-family: var(--font-mono);
@@ -386,6 +432,7 @@ button, input { font: inherit; color: inherit; }
   align-content: start;
   margin-block: auto;  /* centred when it fits, scrolls from the top when it doesn't */
 }
+.face--back .face__top { margin-bottom: calc(-1 * var(--space-md)); }
 
 .prompt-en {
   margin: 0;
