@@ -113,14 +113,71 @@
 
   // ── Voice: the device's own Russian text-to-speech ───────────────
   const synth = window.speechSynthesis;
-  let ruVoice = null;
-  function pickVoice() {
-    const ru = synth.getVoices().filter((v) => (v.lang || "").toLowerCase().startsWith("ru"));
-    ruVoice = ru.find((v) => /milena|katya|yuri|google/i.test(v.name)) || ru[0] || null;
+
+  // Add ?debug to the URL to see a speech log on screen, for checking the voice on a phone
+  const DEBUG = /[?&]debug\b/.test(location.search);
+  function dbg(msg) {
+    if (!DEBUG) return;
+    let el = $("debug");
+    if (!el) { el = document.createElement("pre"); el.id = "debug"; document.body.append(el); }
+    const t = new Date().toISOString().slice(17, 23);
+    el.textContent = [`${t} ${msg}`, ...el.textContent.split("\n")].slice(0, 16).join("\n");
+  }
+
+  // iOS Safari's speech engine is flaky: it can drop an utterance queued right after cancel(),
+  // garbage-collect one before it plays, stay paused after an interruption, or hand out a stale
+  // voice list. Each guard below covers one of those.
+  function russianVoice() {
+    const ru = synth.getVoices().filter((v) => (v.lang || "").toLowerCase().replace("_", "-").startsWith("ru"));
+    return ru.find((v) => /milena|katya|yuri|google/i.test(v.name)) || ru[0] || null;
   }
   if (synth) {
-    pickVoice();
-    synth.addEventListener?.("voiceschanged", pickVoice);
+    synth.getVoices(); // start loading the list early
+    synth.addEventListener?.("voiceschanged", () => dbg(`voices: ${russianVoice()?.name ?? "no Russian voice"}`));
+  }
+
+  let current = null; // the utterance in flight; holding it also keeps it from being collected
+  let watchdog = 0;
+  let pendingGo = 0; // a delayed start waiting out the gap after cancel()
+
+  function stopSpeech() {
+    clearTimeout(watchdog);
+    clearTimeout(pendingGo);
+    pendingGo = 0;
+    if (current) { current = null; synth.cancel(); }
+    document.querySelectorAll(".say.is-speaking").forEach((b) => b.classList.remove("is-speaking"));
+  }
+
+  function utter(text, rate, btn, isRetry) {
+    const u = new SpeechSynthesisUtterance(text);
+    const voice = russianVoice();
+    u.lang = "ru-RU";
+    if (voice) u.voice = voice;
+    u.rate = rate;
+    let started = false;
+    u.onstart = () => { started = true; dbg("start"); };
+    u.onend = u.onerror = (e) => {
+      dbg(e.type === "error" ? `error ${e.error}` : "end");
+      if (current !== u) return;
+      current = null;
+      clearTimeout(watchdog);
+      btn.classList.remove("is-speaking");
+    };
+    current = u;
+    if (synth.paused) synth.resume();
+    synth.speak(u);
+    dbg(`speak «${text}» voice=${voice?.name ?? "default"} paused=${synth.paused}${isRetry ? " (retry)" : ""}`);
+
+    // Nothing started after 1.5 s: the engine dropped it. Reset it and try once more.
+    clearTimeout(watchdog);
+    watchdog = setTimeout(() => {
+      if (started || synth.speaking || current !== u) return;
+      dbg("no start, resetting");
+      current = null;
+      synth.cancel();
+      if (isRetry) return btn.classList.remove("is-speaking");
+      pendingGo = setTimeout(() => { pendingGo = 0; utter(text, rate, btn, true); }, 100);
+    }, 1500);
   }
 
   // A second tap on the same text within a few seconds replays it slower
@@ -129,16 +186,21 @@
     const now = Date.now();
     const slow = lastSaid.text === text && now - lastSaid.at < 4000;
     lastSaid = { text, at: now };
-    synth.cancel();
-    const u = new SpeechSynthesisUtterance(text.replace(/\s*\/\s*/g, ", "));
-    u.lang = "ru-RU";
-    if (ruVoice) u.voice = ruVoice;
-    u.rate = slow ? 0.6 : 0.9;
-    document.querySelectorAll(".say.is-speaking").forEach((b) => b.classList.remove("is-speaking"));
+    // The playback session keeps speech audible with the iPhone's silent switch on
+    try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch {}
+
+    const busy = !!current || !!pendingGo;
+    stopSpeech();
     btn.classList.add("is-speaking");
-    u.onend = u.onerror = () => btn.classList.remove("is-speaking");
-    synth.speak(u);
+    const go = () => utter(text.replace(/\s*\/\s*/g, ", "), slow ? 0.6 : 0.9, btn, false);
+    // Safari can drop an utterance queued in the same tick as cancel(), so leave a gap.
+    // The first tap has nothing to cancel and speaks straight from the gesture.
+    if (busy) pendingGo = setTimeout(() => { pendingGo = 0; go(); }, 100);
+    else go();
   }
+
+  document.addEventListener("visibilitychange", () => { if (document.hidden && synth) stopSpeech(); });
+  window.addEventListener("pagehide", () => { if (synth) stopSpeech(); });
 
   const SPEAKER = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">' +
     '<path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>';
@@ -219,7 +281,7 @@
     card.classList.remove("is-flipped", "enter", "enter-back");
     S.flipped = false;
 
-    synth?.cancel();
+    if (synth) stopSpeech();
     const front = dir === "ru"
       ? `<div class="face__top"><span class="face__label">Russian</span>${sayBtn(c.ru, "Listen")}</div><div class="face__body">${interlinear(c.ru, settings.latin ? "" : "no-latin")}</div>`
       : `<div class="face__top"><span class="face__label">English</span></div><div class="face__body"><p class="prompt-en${c.en.length > 22 ? " is-long" : ""}">${esc(c.en)}</p></div>`;

@@ -577,3 +577,19 @@ button, input { font: inherit; color: inherit; }
   .card.is-flipped .face--back .il__la { animation: none; }
   .progress span, .switch__track::after { transition: none; }
 }
+
+/* ?debug speech log */
+#debug {
+  position: fixed;
+  left: 8px; right: 8px; bottom: 8px;
+  z-index: var(--z-sticky);
+  max-height: 40vh;
+  overflow: hidden;
+  margin: 0;
+  padding: var(--space-xs);
+  background: var(--color-card);
+  border: var(--rule-hair) solid var(--color-ink);
+  font: 11px/1.35 var(--font-mono);
+  white-space: pre-wrap;
+  pointer-events: none;
+}
